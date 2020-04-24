@@ -57,6 +57,14 @@ class Note(Resource):
 
         return note.json(),200
 
+    def delete(self,title):
+        note=NoteModel.filter_by_title(title)
+        if note:
+            note.delete_from_db()
+        
+        return {"message":"Note:{} was deleted".format(title)},200
+        
+
 
 class NoteList(Resource):
     def get(self):
