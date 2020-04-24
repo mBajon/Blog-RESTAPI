@@ -68,6 +68,5 @@ class Note(Resource):
 
 class NoteList(Resource):
     def get(self):
-        note_list=NoteModel.query.all()
-        return {'Notes':note.json() for note in note_list}
+        return{'Notes': list(map(lambda x: x.json(), NoteModel.query.all()))}
 
