@@ -1,7 +1,5 @@
 from flask_jwt import JWT, jwt_required
 from flask_restful import Resource, reqparse
-import sqlite3
-from flask import jsonify
 from models.note import NoteModel
 import datetime
 
@@ -23,8 +21,6 @@ class Note(Resource):
     def post(self, title):
         if NoteModel.filter_by_title(title):
             return {"message":"note with that title already exists"},409
-        else:
-            print("gawno")
 
         data=Note.parser.parse_args()
         note=NoteModel(title, **data)
