@@ -1,32 +1,31 @@
 from db import db
 from datetime import datetime
-from sqlalchemy.ext.serializer import Serializer
+from models.author import AuthorModel
 
 class NoteModel(db.Model):
     __tablename__='notes'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), unique=False,nullable=False)
-    author = db.Column(db.String(120), unique=False, nullable=False)
     note = db.Column(db.String(5000), unique=False, nullable=False)
     created_date = db.Column(db.Date, nullable=False,
         default=datetime.utcnow)
     updated_date = db.Column(db.DateTime, nullable=True)
+    author_id=db.Column(db.Integer, db.ForeignKey('authors.id'))
+    author=db.relationship('AuthorModel')
 
-    def __init__(self, title, author, note):
+
+    def __init__(self, title, author_id, note):
         self.title=title
-        self.author=author
+        self.author_id=author_id
         self.note=note
     
     def json(self):
-        return {"Title":self.title, "Author":self.author, "Note":self.note}
+        author=AuthorModel.filter_by_id(self.author_id)
+        return {"Title" : self.title, "Author": author.name, "Note" : self.note}  
 
     @classmethod
     def filter_by_author(cls,author):
         return cls.query.filter_by(author=author).all()
-
-    @classmethod
-    def filter_by_date(cls, date):
-        return cls.query.filter_by(date=date).all()
 
     @classmethod
     def filter_by_title(cls, title):
