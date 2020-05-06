@@ -10,7 +10,7 @@ class AuthorModel(db.Model):
         self.name=name
 
     def json(self):
-        return {"name":self.name}
+        return {"id":self.id, "name":self.name}
 
     @classmethod
     def filter_by_id(cls, id):

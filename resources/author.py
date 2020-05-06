@@ -18,7 +18,14 @@ class Author(Resource):
             return {'message':'can not save the note'},500
         
         return author.json(), 201   
+    
+    def get(self, name):
+        author = AuthorModel.filter_by_name(name)
+        if author:
+            return author.json(),200
+        return {"message":"No author with that name"},404     
 
+ 
 
 
 
