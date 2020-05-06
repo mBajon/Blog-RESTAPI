@@ -23,7 +23,15 @@ class Author(Resource):
         author = AuthorModel.filter_by_name(name)
         if author:
             return author.json(),200
-        return {"message":"No author with that name"},404     
+        return {"message":"No author with that name"},404 
+
+    def delete(self, name):
+        author=AuthorModel.filter_by_title(name)
+        if author:
+            author.delete_from_db()
+        
+        return {"message":"Author:{} was deleted".format(name)},200
+
 
  
 
