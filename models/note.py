@@ -21,7 +21,9 @@ class NoteModel(db.Model):
     
     def json(self):
         author=AuthorModel.filter_by_id(self.author_id)
-        return {"Title" : self.title, "Author": author.name, "Note" : self.note}  
+        if author is not None:
+            return {"Title" : self.title, "Author": author.name, "Note" : self.note} 
+        return {"message: "} 
 
     @classmethod
     def filter_by_author(cls,author):

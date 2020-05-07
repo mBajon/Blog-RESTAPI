@@ -4,7 +4,7 @@ class AuthorModel(db.Model):
     __tablename__='authors'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    notes=db.relationship('NoteModel', lazy='dynamic')
+    notes=db.relationship('NoteModel', lazy='dynamic',cascade="all, delete-orphan")
 
     def __init__(self, name):
         self.name=name
