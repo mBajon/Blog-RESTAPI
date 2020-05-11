@@ -1,6 +1,6 @@
 from db import db
 
-class User(db.Model):
+class UserModel(db.Model):
     __tablename__ = "Users"
     username = db.Column(db.String(80))
     password = db.Column(db.String(80))
