@@ -16,6 +16,9 @@ class UserModel(db.Model):
     def delete_from_db(self):
         db.session.add(self)
         db.session.commit(self)
+
+    def json(self):
+        return {"username":self.username}
     
     @classmethod
     def find_by_username(cls, username):
