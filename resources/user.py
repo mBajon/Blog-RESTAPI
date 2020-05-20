@@ -52,17 +52,3 @@ class User(Resource):
         user.delete_from_db()
         return {"message":"user {} was deleted".format(username)},200
 
-class UserLogout(Resource):
-    @jwt_required
-    def post(self):
-        jti=get_raw_jwt()['jti']
-        #BLACKLIST.add(jti)
-        return {"User logged out successfully"},200
-
-
-class TokenRefresh(Resource):
-    @jwt_refresh_token_required
-    def post(self):
-        current_user = get_jwt_identity()
-        new_token= create_refresh_token(current_user,fresh=False)
-        return {'access token':new_token },200
