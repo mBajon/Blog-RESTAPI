@@ -5,6 +5,7 @@ from db import db
 from resources.note import Note
 from resources.note import NoteList
 from resources.author import Author
+from resources.user import UserRegister
 
 app=Flask(__name__)
 api=Api(app)
@@ -16,6 +17,7 @@ app.secret_key='maciek'
 api.add_resource(Note,'/Note/<string:title>')
 api.add_resource(NoteList,'/Notes')
 api.add_resource(Author,'/Author/<string:name>')
+api.add_resource(UserRegister,'/Register')
 db.init_app(app)
 
 @app.before_first_request

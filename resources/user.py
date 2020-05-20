@@ -9,7 +9,7 @@ from flask_jwt_extended import (
     jwt_required,
     get_raw_jwt
     )
-from blacklist import BLACKLIST
+#from blacklist import BLACKLIST
 
 parser = reqparse.RequestParser()
 parser.add_argument(
@@ -24,16 +24,17 @@ parser.add_argument(
         required=True,
         help='This field cannot be left blank'
         )
-data = parser.parse_args()
 
 class UserRegister(Resource):
+    
     def post(self):
+        data = parser.parse_args()
         if UserModel.find_by_username(data['username']) is not None:
             return {"message":"user is already registered"},400
         
         user =  UserModel(**data)
         user.save_to_db()
-        return {"message":"user is already registered"},201
+        return {"message":"user {} registered".format(data['username'])},201
 
 class User(Resource):
     @classmethod
@@ -55,7 +56,7 @@ class UserLogout(Resource):
     @jwt_required
     def post(self):
         jti=get_raw_jwt()['jti']
-        BLACKLIST.add(jti)
+        #BLACKLIST.add(jti)
         return {"User logged out successfully"},200
 
 

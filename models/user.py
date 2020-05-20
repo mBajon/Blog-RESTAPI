@@ -2,6 +2,7 @@ from db import db
 
 class UserModel(db.Model):
     __tablename__ = "Users"
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80))
     password = db.Column(db.String(80))
 
@@ -11,11 +12,11 @@ class UserModel(db.Model):
 
     def save_to_db(self):
         db.session.add(self)
-        db.session.commit(self)
+        db.session.commit()
 
     def delete_from_db(self):
         db.session.add(self)
-        db.session.commit(self)
+        db.session.commit()
 
     def json(self):
         return {"username":self.username}
